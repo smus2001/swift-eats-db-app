@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurants</title>
+</head>
+<body>
+  <h1>Restaurants</h1>
+    <p><a href="/restaurants/add">+ Add restaurant</a></p>
+    <form method="get" action="/restaurants">
+    <input type="text" name="q" placeholder="Search name, category or city" value="{{ q }}">
+    <button type="submit">Search</button>
+    <a href="/restaurants">Clear</a>
+  </form>
+  <p>{{ restaurants|length }} result(s)</p>
+  <table border="1" cellpadding="6">
+    <tr>
+      <th>ID</th><th>Name</th><th>Category</th><th>City</th>
+      <th>Area</th><th>Price</th><th>Rating</th><th>Active</th><th></th>
+    </tr>
+    {% for r in restaurants %}
+    <tr>
+      <td>{{ r.restaurant_id }}</td>
+      <td>{{ r.restaurant_name }}</td>
+      <td>{{ r.category }}</td>
+      <td>{{ r.city_name }}</td>
+      <td>{{ r.area_name }}</td>
+      <td>{{ r.cost_bracket }}</td>
+      <td>{{ r.rating }}</td>
+      <td>{{ 'Yes' if r.is_active else 'No' }}</td>
+            <td>
+        <a href="/restaurants/{{ r.restaurant_id }}/edit">Edit</a>
+        <form method="post" action="/restaurants/{{ r.restaurant_id }}/delete"
+              style="display:inline"
+              onsubmit="return confirm('Delete this restaurant?');">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
